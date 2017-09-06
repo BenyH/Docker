@@ -1,0 +1,110 @@
+login as: ubuntu
+Authenticating with public key "imported-openssh-key"
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-1020-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+19 packages can be updated.
+0 updates are security updates.
+
+ubuntu@ip-172-31-1-97:~$ ******************************************   START INSTALLING SHIELD 00:00 **************************************************
+ubuntu@ip-172-31-1-97:~$ date
+Thu Jul 20 08:44:07 UTC 2017
+ubuntu@ip-172-31-1-97:~$ sudo ./ericomshield-setup.sh
+./ericomshield-setup.sh: line 34: /usr/local/ericomshield/.esswarm: No such file                                                                                                               or directory
+Docker Login: ericomshield1 Ericom98765$
+dev=false
+autoupdate=true
+Swarm=true
+sudo: docker: command not found
+***************     Installing docker-engine
+Starting docker service
+***************     Success!
+./ericomshield-setup.sh: line 119: docker-compose: command not found
+***************     Installing docker-compose
+Getting /usr/local/ericomshield/ericomshield-repo.sh
+/usr/local/ericomshield/ericomshield-repo.sh
+Getting https://raw.githubusercontent.com/ErezPasternak/Shield/master/Dev-Feb16/                                                                                                              shield-version.txt (prod)
+***************     Installing EricomShield (8.0.0.120-setup)...
+Getting /usr/local/ericomshield/docker-compose.yml
+Getting https://raw.githubusercontent.com/ErezPasternak/Shield/master/Dev-Feb16/                                                                                                              docker-compose_swarm.yml SWARM
+docker login ericomshield1 Ericom98765$
+Login Succeeded!
+file /etc/sysctl.conf Updated!!!!
+Preparing yml file (Containers build number)
+**************  Creating the ericomshield service...
+service for swarm
+Created symlink from /etc/systemd/system/multi-user.target.wants/ericomshield.se                                                                                                              rvice to /usr/local/ericomshield/ericomshield.service.
+Created symlink from /etc/systemd/system/ericomshield.service to /usr/local/eric                                                                                                              omshield/ericomshield.service.
+**************  Creating the ericomshield updater service...
+Created symlink from /etc/systemd/system/ericomshield-updater.service to /usr/lo                                                                                                              cal/ericomshield/ericomshield-updater.service.
+Created symlink from /etc/systemd/system/multi-user.target.wants/ericomshield-up                                                                                                              dater.service to /usr/local/ericomshield/ericomshield-updater.service.
+Done!
+source deploy-shield.sh
+#######################Start create swarm#####################
+Swarm initialized: current node (n01y8r6udeyllwicqo6achjn3) is now a manager.
+########################Swarm created########################
+++ create_uuid
++++ docker secret ls
++++ grep -c shield-system-id
+++ '[' 0 -eq 0 ']'
++++ uuidgen
+++ docker stack deploy -c docker-compose.yml shield --with-registry-auth
+Creating network shield_shield
+Creating service shield_collector
+Creating service shield_broker-server
+Creating service shield_shield-admin
+Creating service shield_proxy-server
+Creating service shield_ext-proxy
+Creating service shield_consul
+Creating service shield_portainer
+Creating service shield_shield-browser
+Creating service shield_elk
+Creating service shield_icap-server
++ '[' 0 == 0 ']'
++ echo '***************     Success!'
+***************     Success!
++ wait=0
++ '[' 0 -lt 5 ']'
++ /usr/local/ericomshield/status.sh
+27
+0
+ Ericom Shield is not running properly on this system
+ 
+ubuntu@ip-172-31-1-97:~$ date
+Thu Jul 20 08:45:14 UTC 2017
+ubuntu@ip-172-31-1-97:~$ ******************************************   START INSTALLING SHIELD 00:01 **************************************************
+ubuntu@ip-172-31-1-97:~$ sudo docker service ls
+ID                  NAME                    MODE                REPLICAS                                                                                                                          IMAGE                                                  PORTS
+8663g4wtfmnm        shield_icap-server      replicated          0/1                                                                                                                               securebrowsing/icap-server:170711-15.57-215            *:1344->1344/tcp
+8gj314tbsqvl        shield_proxy-server     replicated          0/2                                                                                                                               securebrowsing/proxy-server:170709-10.27-190           *:3128->3128/tcp
+cejo1vk303ny        shield_collector        replicated          0/1                                                                                                                               securebrowsing/shield-collector:170704-12.55-161
+ims3hewrhe8a        shield_ext-proxy        replicated          0/0                                                                                                                               securebrowsing/extproxy:latest                         *:3138->3138/tcp
+iwbafttj7gwy        shield_consul           global              0/1                                                                                                                               securebrowsing/shield-configuration:170608-13.36-191   *:8500->8500/tcp
+kztuxmmsrm2x        shield_shield-browser   replicated          0/0                                                                                                                               securebrowsing/shield-cef:170712-21.22-224
+qxsvo7yko4g1        shield_broker-server    replicated          0/1                                                                                                                               securebrowsing/broker-server:170706-15.27-186
+s5ogcaoizp8i        shield_shield-admin     replicated          0/1                                                                                                                               securebrowsing/shield-admin:170711-17.45-216           *:8181->8181/tcp
+swz04yj2gwas        shield_elk              replicated          0/1                                                                                                                               securebrowsing/shield-elk:170704-12.55-161             *:5014->5014/udp,*:56                                                                                                              01->5601/tcp,*:9200->9200/tcp
+yf2h4cwlvjx1        shield_portainer        replicated          0/1                                                                                                                               securebrowsing/shield-portainer:170705-09.04-174       *:9000->9000/tcp
+ubuntu@ip-172-31-1-97:~$ sudo docker service ls
+ID                  NAME                    MODE                REPLICAS            IMAGE                                                  PORTS
+8663g4wtfmnm        shield_icap-server      replicated          1/1                 securebrowsing/icap-server:170711-15.57-215            *:1344->1344/tcp
+8gj314tbsqvl        shield_proxy-server     replicated          2/2                 securebrowsing/proxy-server:170709-10.27-190           *:3128->3128/tcp
+cejo1vk303ny        shield_collector        replicated          1/1                 securebrowsing/shield-collector:170704-12.55-161
+ims3hewrhe8a        shield_ext-proxy        replicated          0/0                 securebrowsing/extproxy:latest                         *:3138->3138/tcp
+iwbafttj7gwy        shield_consul           global              1/1                 securebrowsing/shield-configuration:170608-13.36-191   *:8500->8500/tcp
+kztuxmmsrm2x        shield_shield-browser   replicated          10/10               securebrowsing/shield-cef:170712-21.22-224
+qxsvo7yko4g1        shield_broker-server    replicated          1/1                 securebrowsing/broker-server:170706-15.27-186
+s5ogcaoizp8i        shield_shield-admin     replicated          1/1                 securebrowsing/shield-admin:170711-17.45-216           *:8181->8181/tcp
+swz04yj2gwas        shield_elk              replicated          1/1                 securebrowsing/shield-elk:170704-12.55-161             *:5014->5014/udp,*:5601->5601/tcp,*:9200->9200/tcp
+yf2h4cwlvjx1        shield_portainer        replicated          1/1                 securebrowsing/shield-portainer:170705-09.04-174       *:9000->9000/tcp
+ubuntu@ip-172-31-1-97:~$ date
+Thu Jul 20 08:48:39 UTC 2017
+ubuntu@ip-172-31-1-97:~$ ******************************************   SYSTEM is UP and RUNNING 00:04 **************************************************
+ericomshield-setup.sh: command not found
+ubuntu@ip-172-31-1-97:~$

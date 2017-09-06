@@ -1,0 +1,20 @@
+docker build -t docker5/myapp .
+docker tag  myapp benyh5/docker:v1
+docker push benyh5/docker:v1
+
+docker images | grep myapp
+
+docker run -d -p 4000:80 myapp
+curl http://localhost:4000
+
+vi docker-compose.yml
+docker-compose up
+docker-compose ps
+docker ps
+curl http://localhost:4000
+wget http://localhost:4000
+docker-compose images
+docker-compose logs
+docker-compoe pull
+docker-compose top
+docker-compose down
